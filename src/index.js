@@ -1,12 +1,8 @@
-require("dotenv").config();
 const express = require("express");
-const { ApolloServer, gql } = require("apollo-server-express");
+const { ApolloServer, gql, registerServer } = require("apollo-server-express");
 
-const models = require("./models");
-const db = require("./db");
-
-const DB_HOST = process.env.DB_HOST;
 const port = process.env.PORT || 4000;
+const app = express();
 
 const typeDefs = gql`
     type Note {
@@ -17,44 +13,61 @@ const typeDefs = gql`
 
     type Query {
         hello: String
-        notes: [Note!]!
         note(id: ID!): Note!
+        notes: [Note!]!
     }
 
     type Mutation {
-        createNote(content: String!): Note!
+        createNote: Note!
     }
 `;
 
+let notesData = [
+    {
+        id: "1",
+        author: "Georges Tim",
+        content: "This is the first note"
+    },
+    {
+        id: "2",
+        author: "Kotomi Tim",
+        content: "This is the second note"
+    },
+    {
+        id: "3",
+        author: "Kotomi Tim",
+        content: "This is the third note"
+    }
+];
+
 const resolvers = {
     Query: {
-        hello: () => "uu",
-        notes: async () => {
-            return await models.Note.find();
-        },
-        note: async (parent, args) => {
-            return await models.Note.create({
-                content: args.content,
-                author: "Foo Bar"
-            });
+        hello: () => "lorem ipsum dolores",
+        notes: () => notesData,
+        note: (parent, args) => {
+            return notesData.find(note => note.id === args.id);
         }
     },
-
     Mutation: {
-        createNote: () => ""
+        createNote: (parent, args) => {
+            let newNote = {
+                id: notesData.length + 1,
+                content: "my new note",
+                author: "Foo Bar"
+            }
+            notesData.push(newNote);
+            return newNote;
+        } 
     }
-};
-
-db.connect(DB_HOST);
-const app = express();
+}
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers });
-apolloServer.applyMiddleware({ app, path: "/api" })
+
+apolloServer.applyMiddleware({ app, path:"/api" });
 
 app.listen(
     { port },
     () => {
-        console.log(`GraphQL Server listening at http://localhost:${port}${apolloServer.graphqlPath}`);
+        console.log(`GraphQL is serving at http://localhost:${port}${apolloServer.graphqlPath}`);
     }
 );
-
