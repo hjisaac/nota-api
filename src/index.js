@@ -1,30 +1,47 @@
+require("dotenv").config();
 const express = require("express");
 const { ApolloServer, gql } = require("apollo-server-express");
 
-const app = express();
+const db = require("./db");
 
+const DB_HOST = process.env.DB_HOST;
 const port = process.env.PORT || 4000;
+
 const typeDefs = gql`
-    type Note
-    type Query {
-        hello: String
+    type Note {
+        id: ID!
+        content: String!
+        author: String!
     }
 
     type Query {
-        Note: {
+        hello: String
+        notes: [Note!]!
+        note(id: ID!): Note!
+    }
 
-        }
+    type Mutation {
+        createNote(content: String!): Note!
+
     }
 `;
 
 const resolvers = {
     Query: {
-        hello: () => "Hello world"
+        hello: () => "Hello world",
+        notes: () => "",
+        note: () => ""
+    },
+
+    Mutation: {
+        createNote: () => ""
     }
 };
 
-const apolloServer = new ApolloServer({ typeDefs, resolvers });
+db.connect(DB_HOST);
+const app = express();
 
+const apolloServer = new ApolloServer({ typeDefs, resolvers });
 apolloServer.applyMiddleware({ app, path: "/api" })
 
 
