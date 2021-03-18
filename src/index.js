@@ -23,7 +23,6 @@ const typeDefs = gql`
 
     type Mutation {
         createNote(content: String!): Note!
-
     }
 `;
 
