@@ -11,7 +11,7 @@ module.exports = {
             "error",
             (err) => {
                 console.error(err);
-                console.log("MongoDB connection failed. Please  make sure that mongod is up")
+                console.log("MongoDB connection failed. Please  make sure that mongod is up");
             }
         );
         process.exit();

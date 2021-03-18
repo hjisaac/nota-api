@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const { ApolloServer, gql } = require("apollo-server-express");
 
+const models = require("./models");
 const db = require("./db");
 
 const DB_HOST = process.env.DB_HOST;
@@ -28,8 +29,10 @@ const typeDefs = gql`
 
 const resolvers = {
     Query: {
-        hello: () => "Hello world",
-        notes: () => "",
+        hello: () => "uu",
+        notes: async () => {
+            return await models.Note.find();
+        },
         note: () => ""
     },
 
@@ -41,9 +44,14 @@ const resolvers = {
 db.connect(DB_HOST);
 const app = express();
 
+
 const apolloServer = new ApolloServer({ typeDefs, resolvers });
 apolloServer.applyMiddleware({ app, path: "/api" })
 
+app.get(
+    "/", 
+    (request, response) => {console.log("tititi");}
+);
 
 app.listen(
     { port },
@@ -51,3 +59,5 @@ app.listen(
         console.log(`GraphQL Server listening at http://localhost:${port}${apolloServer.graphqlPath}`);
     }
 );
+
+console.log("totot");

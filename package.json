@@ -1,7 +1,7 @@
 {
-  "name": "notedly-api",
+  "name": "noteapp",
   "version": "1.0.0",
-  "description": "API code examples for JavaScript Everywhere by Adam Scott, published by O'Reilly Media",
+  "description": "",
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon src/index.js",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:javascripteverywhere/api.git"
+    "url": "git@github.com:hjisaac/noteapp-with-node.git"
   },
   "nodemonConfig": {
     "ignore": [
