@@ -33,7 +33,12 @@ const resolvers = {
         notes: async () => {
             return await models.Note.find();
         },
-        note: () => ""
+        note: async (parent, args) => {
+            return await models.Note.create({
+                content: args.content,
+                author: "Foo Bar"
+            });
+        }
     },
 
     Mutation: {
@@ -44,14 +49,8 @@ const resolvers = {
 db.connect(DB_HOST);
 const app = express();
 
-
 const apolloServer = new ApolloServer({ typeDefs, resolvers });
 apolloServer.applyMiddleware({ app, path: "/api" })
-
-app.get(
-    "/", 
-    (request, response) => {console.log("tititi");}
-);
 
 app.listen(
     { port },
@@ -60,4 +59,3 @@ app.listen(
     }
 );
 
-console.log("totot");
