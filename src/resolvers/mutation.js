@@ -1,18 +1,37 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 const { AuthenticationError, ForbiddenError } = require("apollo-server-express");
 
 require("dotenv").config();
 const gravatar = require("../util/gravatar");
+const nodemon = require("nodemon");
 
 module.exports = {
-    createNote: async (parent, args, { models }) => {
+    createNote: async (parent, args, { models, userInformation }) => {
+        // check for user information in the context
+        if(!userInformation) {
+            throw new AuthenticationError("Error- You must sign in to create a note");
+        }
         return await models.Note.create({
             content: args.content,
-            author: "Foo Bar"
+            author: mongoose.Types.ObjectId(userInformation.id)
         });
     },
-    updateNote: async (parent, { content, id }, { models }) => {
+    updateNote: async (parent, { content, id }, { models, userInformation }) => {
+
+        // userInformation must exists if that user has signed in
+        if(!userInformation) {
+            throw new AuthenticationError("Error- Sign in first before deleting note");
+        }
+
+        // find the note having id
+        const note = await models.Note.findById(id);
+        // check if current signed in user is the ower of the @note
+        if(note && String(note.author) !== user.id) {
+            throw new ForbiddenError("Error- You don't have note deletion permission");
+        }        
+
         return await models.Note.findOneAndUpdate(
             {
                 _id: id,
@@ -27,10 +46,23 @@ module.exports = {
             }
         );
     },
-    deleteNote: async (parent, { id }, { models }) => {
+    deleteNote: async (parent, { id }, { models, userInformation }) => {
+        // userInformation must exists if that user has signed in
+        if(!userInformation) {
+            throw new AuthenticationError("Error- Sign in first before deleting note");
+        }
+
+        // find the note having id
+        const note = await models.Note.findById(id);
+        // check if current signed in user is the ower of the @note
+        if(note && String(note.author) !== user.id) {
+            throw new ForbiddenError("Error- You don't have note deletion permission");
+        }
+
         let isDelected = false;
+
         try {
-            await models.Note.findOneAndRemove({ _id: id });
+            await note.remove();
             isDelected = true;
         } catch (error) {
             console.log(error);
@@ -81,5 +113,46 @@ module.exports = {
         }
 
         return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    },
+    toggleFavorite: async (parent, { id }, { models, userInformation }) => {
+        if(!userInformation) {
+            throw new AuthenticationError("Error- Sign in first");
+        }
+        let note = models.Note.findById(id);
+        // check if the user have already favourite this note
+        console.log("note =", note);
+        let userIndex = note.favoritedBy.indexOf(userInformation.id);
+        if(userIndex >= 0) {
+            // if the user exists, remove him from the this note favorited user and reduce 
+            // the favoriteCount attribute(value) by 1
+            return await models.Note.findByIdAndUpdate(
+                id,
+                {
+                    $pull: {
+                        favoritedBy: mongoose.Types.ObjectId(userInformation.id)
+                    },
+                    $in: {
+                        favoriteCount: -1
+                    }
+                },
+                // setting new to true allow to return the updated document
+                { new: true }
+            );
+        } else {
+            // if the user is not in this note favorited user list, add him to that list
+            // and increment the favoriteCount attribute(value) by 1
+            return await models.Note.findByIdAndUpdate(
+                id,
+                {
+                    $push: {
+                        favoritedBy: mongoose.Types.ObjectId(userInformation.id)
+                    },
+                    $inc: {
+                        favoriteCount: 1
+                    }
+                },
+                { new: true }
+            );
+        }
     }
 };

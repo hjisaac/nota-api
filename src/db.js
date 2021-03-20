@@ -9,8 +9,8 @@ module.exports = {
         mongoose.connect(DB_HOST);
         mongoose.connection.on(
             ("error"),
-            (errMsg) => {
-                console.error(errMsg);
+            (err) => {
+                console.error(err);
                 console.log("DB connection failed; make sure mongod.service is up");
                 process.exit();
             }
