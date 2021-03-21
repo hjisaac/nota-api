@@ -118,20 +118,21 @@ module.exports = {
         if(!userInformation) {
             throw new AuthenticationError("Error- Sign in first");
         }
-        let note = models.Note.findById(id);
-        // check if the user have already favourite this note
-        console.log("note =", note);
-        let userIndex = note.favoritedBy.indexOf(userInformation.id);
+        const note = await models.Note.findById(id);
+        // check if the current user has already favorited this note 
+        const  userIndex = note.favoritedBy.indexOf(userInformation.id);
         if(userIndex >= 0) {
-            // if the user exists, remove him from the this note favorited user and reduce 
-            // the favoriteCount attribute(value) by 1
+            // if the user exists, remove him from the this note favorited user and 
+            // reduce the favoriteCount attribute (value) by 1
+            console.log("pulling the user from *list with");
+            console.log("\t favorited.by =", note.favoritedBy);
             return await models.Note.findByIdAndUpdate(
                 id,
                 {
                     $pull: {
                         favoritedBy: mongoose.Types.ObjectId(userInformation.id)
                     },
-                    $in: {
+                    $inc: {
                         favoriteCount: -1
                     }
                 },
@@ -139,8 +140,10 @@ module.exports = {
                 { new: true }
             );
         } else {
-            // if the user is not in this note favorited user list, add him to that list
+            // if the user is not in this note's favorited user list, add him to that list
             // and increment the favoriteCount attribute(value) by 1
+            console.log("pushing the user to *list with");
+            console.log("\t favorited.by =", note.favoritedBy);
             return await models.Note.findByIdAndUpdate(
                 id,
                 {
