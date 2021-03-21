@@ -1,5 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const helmet = require("helmet");
+const cors = require("cors");
 const { ApolloServer, gql, registerServer } = require("apollo-server-express");
 
 require("dotenv").config();
@@ -11,6 +13,11 @@ const resolvers = require("./resolvers");
 const port = process.env.PORT || 4000;
 const DB_HOST = process.env.DB_HOST;
 const app = express();
+
+// middleware for preventing common web vulnerabilities
+app.use(helmet());
+// middleware for enabling Common-origin ressources sharing
+app.use(cors());
 
 // get user information from jsonwebtoken
 const getUser = token => {

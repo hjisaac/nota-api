@@ -6,7 +6,7 @@ const typeDefs = gql`
     type Note {
         id: ID!
         content: String!
-        author: String!
+        author: User!
         favoriteCount: Int!
         favoritedBy: [User!]
         createdAt: DateTime!
@@ -22,6 +22,12 @@ const typeDefs = gql`
         favorites: [Note!]!
     }
 
+    type NoteFeed {
+        notes: [Note]!
+        cursor: String!
+        hasNext: Boolean!
+    }
+
     type Query {
         hello: String
         note(id: ID!): Note!
@@ -29,6 +35,7 @@ const typeDefs = gql`
         user(username: String!): User!
         users: [User!]!
         me: User!
+        noteFeed(cursor: String): NoteFeed
     }
 
     type Mutation {

@@ -5,7 +5,6 @@ const { AuthenticationError, ForbiddenError } = require("apollo-server-express")
 
 require("dotenv").config();
 const gravatar = require("../util/gravatar");
-const nodemon = require("nodemon");
 
 module.exports = {
     createNote: async (parent, args, { models, userInformation }) => {

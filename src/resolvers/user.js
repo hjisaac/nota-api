@@ -10,9 +10,9 @@ module.exports = {
     // resolve a favorites notes list for a user when requested
     favorites: async (user, args, { models }) => {
         return await models.Note.find(
-            { favoritedBy: user._id}
+            { favoritedBy: user._id }
         ).sort(
-            { _id: -1}
+            { _id: -1 }
         );
     }
 }
