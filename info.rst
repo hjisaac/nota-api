@@ -23,7 +23,7 @@ We can do this in graphql using the package validation-complexity and depht-limi
 
 db_user=serieux
 db_pass=sWB6Zq3YLusx3bu
-con_string=mongodb+srv://serieux:<password>@cluster0.ry7wq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+con_string=mongodb+srv://serieux:<password>@cluster0.ry7wq.mongodb.net/<database_name>?retryWrites=true&w=majority
 YOUR_APP_NAME@herok=api-noteapp-with-node
 
 

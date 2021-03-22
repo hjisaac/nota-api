@@ -20,7 +20,7 @@
     ]
   },
   "keywords": [],
-  "author": "Adam Scott",
+  "author": "Houngue Sérieux",
   "license": "MIT",
   "dependencies": {
     "apollo-server-express": "2.4.0",
