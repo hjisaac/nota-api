@@ -25,3 +25,10 @@ db_user=serieux
 db_pass=sWB6Zq3YLusx3bu
 con_string=mongodb+srv://serieux:<password>@cluster0.ry7wq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 YOUR_APP_NAME@herok=api-noteapp-with-node
+
+
+curl \
+-X POST \
+-H "Content-Type: application/json" \
+--data '{ "query": "{ notes { id } }" }' \
+https://api-noteapp-with-node.herokuapp.com/api
