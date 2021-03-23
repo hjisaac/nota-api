@@ -27,7 +27,7 @@ module.exports = {
         // find the note having id
         const note = await models.Note.findById(id);
         // check if current signed in user is the ower of the @note
-        if(note && String(note.author) !== user.id) {
+        if(note && String(note.author) !== userInformation.id) {
             throw new ForbiddenError("Error- You don't have note deletion permission");
         }        
 
@@ -54,7 +54,7 @@ module.exports = {
         // find the note having id
         const note = await models.Note.findById(id);
         // check if current signed in user is the ower of the @note
-        if(note && String(note.author) !== user.id) {
+        if(note && String(note.author) !== userInformation.id) {
             throw new ForbiddenError("Error- You don't have note deletion permission");
         }
 
