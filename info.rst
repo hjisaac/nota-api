@@ -1,3 +1,9 @@
+========
+Heading
+========
+
+
+
 About: datatype, datastructure
 -------------------------------
 db <=> graphql <=> ui_things
@@ -21,6 +27,7 @@ If we don"t prevent overly nested query user can write a query over nested
 that can required a lot of computation to be returned.
 We can do this in graphql using the package validation-complexity and depht-limit
 
+* Heroku Config
 db_user=serieux
 db_pass=sWB6Zq3YLusx3bu
 con_string=mongodb+srv://serieux:<password>@cluster0.ry7wq.mongodb.net/<database_name>?retryWrites=true&w=majority
