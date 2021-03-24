@@ -1,4 +1,0 @@
-{
-    "db_string": "your_test_database_connection_string",
-    "jwt_token": <your_jwt_pass>
-}
