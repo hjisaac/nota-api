@@ -28,10 +28,11 @@ that can required a lot of computation to be returned.
 We can do this in graphql using the package validation-complexity and depht-limit
 
 * Heroku Config
-db_user=serieux
-db_pass=sWB6Zq3YLusx3bu
-con_string=mongodb+srv://serieux:<password>@cluster0.ry7wq.mongodb.net/<database_name>?retryWrites=true&w=majority
-YOUR_APP_NAME@herok=api-noteapp-with-node
+db-user=<username>
+db-pass=<password>
+con-string=mongodb+srv://<username>:<password>@cluster0.ry7wq.mongodb.net/<database_name>?retryWrites=true&w=majority
+app-name=api-noteapp-with-node
+
 
 
 curl \
@@ -39,3 +40,20 @@ curl \
 -H "Content-Type: application/json" \
 --data '{ "query": "{ notes { id } }" }' \
 https://api-noteapp-with-node.herokuapp.com/api
+
+
+
+*js trick
+
+const dico = {
+    entry1: "value1",
+    entry2: "value2",
+    ...
+    entryN: "valueN"
+}
+
+This :
+const { entry: name } = dico 
+means, search entry in dico entries, if found assign its value to the declared variable name
+
+const name = dico.entry

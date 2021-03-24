@@ -2,19 +2,23 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const helmet = require("helmet");
 const cors = require("cors");
-const gqlDepthLimit = require("graphql-depth-limit");
+const depthLimit = require("graphql-depth-limit");
 const { ApolloServer, gql, registerServer } = require("apollo-server-express");
 const { createComplexityLimitRule } = require("graphql-validation-complexity");
 
-require("dotenv").config();
 const models = require("./models");
 const db = require("./db");
 const typeDefs = require("./gql-schema");
 const resolvers = require("./resolvers");
-const depthLimit = require("graphql-depth-limit");
+const env = require("../env");
+const dump = require("./util/dump");
 
-const port = process.env.PORT || 4000;
-const DB_HOST = process.env.DB_HOST;
+
+const port = env.port || 4000;
+
+const DB_STRING = env.db_string;
+
+
 const app = express();
 
 // middleware for preventing common web vulnerabilities
@@ -26,15 +30,15 @@ app.use(cors());
 const getUser = token => {
     if(token) {
         try {
-            // return user informations using from the token
-            return jwt.verify(token, process.env.JWT_SECRET);
+            // return user informations using the token
+            return jwt.verify(token, env.jwt_secret);
         } catch (error) {
             throw new Error("Error- Session invalid");
         }
     }
 }
 
-db.connect(DB_HOST);
+db.connect(DB_STRING);
 
 const apolloServer = new ApolloServer(
     { 

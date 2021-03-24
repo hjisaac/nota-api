@@ -1,0 +1,4 @@
+{
+    "db_string": "your_dev_database_connection_string",
+    "jwt-token": <your_jwt_pass>
+}

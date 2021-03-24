@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const { AuthenticationError, ForbiddenError } = require("apollo-server-express");
 
-require("dotenv").config();
+const env = require("../../env")
 const gravatar = require("../util/gravatar");
 
 module.exports = {
@@ -82,7 +82,7 @@ module.exports = {
                     password: hashedPassword
                 }
             );
-            return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+            return jwt.sign({ id: user._id }, env.jwt_secret);
         } catch (error) {
             console.log(error);
             throw new Error("Error- Account creation failed");
@@ -111,7 +111,7 @@ module.exports = {
             throw new AuthenticationError("Error- Sign-in failed, check your pass")
         }
 
-        return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+        return jwt.sign({ id: user._id }, env.jwt_secret);
     },
     toggleFavorite: async (parent, { id }, { models, userInformation }) => {
         if(!userInformation) {
@@ -141,7 +141,7 @@ module.exports = {
         } else {
             // if the user is not in this note's favorited user list, add him to that list
             // and increment the favoriteCount attribute(value) by 1
-            console.log("pushing the user to *list with");
+            console.log("pushing the user to that list with");
             console.log("\t favorited.by =", note.favoritedBy);
             return await models.Note.findByIdAndUpdate(
                 id,

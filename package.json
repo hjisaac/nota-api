@@ -5,8 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon src/index.js",
-    "dev": "nodemon src/index.js",
-    "final": "nodemon final/index.js",
+    "dev": "export NODE_ENV=dev && nodemon src/index.js",
+    "fake":"export NODE_ENV=dev && nodemon src/fake-index.js",
     "seed": "node final/util/seed/index.js",
     "lint": "eslint \"src/**/*.js\""
   },
