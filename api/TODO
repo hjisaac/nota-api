@@ -1,0 +1,19 @@
+1. fix issues about the following gql-mutation
+```gql
+    mutation {
+        toggleFavorite(id:"6056ea8eff5075830ebcbd85"){
+            id, 
+            content, 
+            favoritedBy { 
+                username, 
+                email, 
+                avatar, 
+                favorites {
+                    id, content, author
+                } 
+            }, 
+            favoriteCount
+        }
+    }
+```
+2. Rewrite de dump function and publish it as gist
