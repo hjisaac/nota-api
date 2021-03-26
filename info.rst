@@ -57,3 +57,6 @@ const { entry: name } = dico
 means, search entry in dico entries, if found assign its value to the declared variable name
 
 const name = dico.entry
+
+
+curl -s 'http://localhost:4000/api' -H 'Content-Type: application/json' -d '{"query": "{ users { username, email } }"}' | jq

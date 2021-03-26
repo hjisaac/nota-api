@@ -72,7 +72,7 @@ module.exports = {
         email = email.trim().toLowerCase();
         const hashedPassword = await bcrypt.hash(password, 10);
         const avatar = gravatar(email);
-        console.log("avatar: ", avatar);
+        
         try {
             const user = await models.User.create(
                 {
@@ -82,7 +82,7 @@ module.exports = {
                     password: hashedPassword
                 }
             );
-            return jwt.sign({ id: user._id }, env.jwt_secret);
+            return jwt.sign({ id: user._id }, env.jwt_token);
         } catch (error) {
             console.log(error);
             throw new Error("Error- Account creation failed");
@@ -111,7 +111,7 @@ module.exports = {
             throw new AuthenticationError("Error- Sign-in failed, check your pass")
         }
 
-        return jwt.sign({ id: user._id }, env.jwt_secret);
+        return jwt.sign({ id: user._id }, env.jwt_token);
     },
     toggleFavorite: async (parent, { id }, { models, userInformation }) => {
         if(!userInformation) {
@@ -140,7 +140,7 @@ module.exports = {
             );
         } else {
             // if the user is not in this note's favorited user list, add him to that list
-            // and increment the favoriteCount attribute(value) by 1
+            // and increment the favoriteCount attribute (value) by 1
             console.log("pushing the user to that list with");
             console.log("\t favorited.by =", note.favoritedBy);
             return await models.Note.findByIdAndUpdate(

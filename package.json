@@ -1,18 +1,18 @@
 {
-  "name": "noteapp",
+  "name": "nota-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "API for nota apps",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js",
+    "start": "export NODE_ENV=prod && nodemon src/index.js",
     "dev": "export NODE_ENV=dev && nodemon src/index.js",
-    "fake":"export NODE_ENV=dev && nodemon src/fake-index.js",
+    "test": "export NODE_ENV=test && jest --verbose ./tests",
     "seed": "node final/util/seed/index.js",
     "lint": "eslint \"src/**/*.js\""
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:hjisaac/noteapp-with-node.git"
+    "url": "git@github.com:hjisaac/nota-api.git"
   },
   "nodemonConfig": {
     "ignore": [
@@ -20,11 +20,11 @@
     ]
   },
   "keywords": [],
-  "author": "Houngue Sérieux",
+  "author": "Adam Scott",
   "license": "MIT",
   "dependencies": {
-    "apollo-server-express": "2.4.0",
-    "bcrypt": "3.0.6",
+    "apollo-server-express": "^2.21.2",
+    "bcrypt": "^5.0.1",
     "cors": "2.8.5",
     "dotenv": "6.1.0",
     "express": "4.16.4",
@@ -37,17 +37,19 @@
     "jsonwebtoken": "8.5.1",
     "marked": "0.7.0",
     "md5": "2.2.1",
-    "mongoose": "5.7.13",
+    "mongoose": "^5.12.2",
     "nodemon": "1.18.7",
     "passport": "0.4.0",
     "passport-github2": "0.1.11"
   },
   "devDependencies": {
-    "eslint": "^5.13.0",
+    "eslint": "5.13.0",
     "eslint-config-prettier": "4.0.0",
     "eslint-plugin-prettier": "3.0.1",
     "faker": "4.1.0",
-    "node-fetch": "2.5.0",
+    "jest": "^26.6.3",
+    "mongodb-memory-server": "^6.9.6",
+    "node-fetch": "^2.6.1",
     "prettier": "1.18.2"
   }
 }

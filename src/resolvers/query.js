@@ -1,7 +1,5 @@
 const { model } = require("../models/note");
 
-const arr = ["a", "g"];
-
 module.exports = {
     notes: async (parent, args, { models }) => {
         return await models.Note.find().limit(100);

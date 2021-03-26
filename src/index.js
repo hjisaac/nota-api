@@ -18,7 +18,6 @@ const port = env.port || 4000;
 
 const DB_STRING = env.db_string;
 
-
 const app = express();
 
 // middleware for preventing common web vulnerabilities
@@ -31,7 +30,7 @@ const getUser = token => {
     if(token) {
         try {
             // return user informations using the token
-            return jwt.verify(token, env.jwt_secret);
+            return jwt.verify(token, env.jwt_token);
         } catch (error) {
             throw new Error("Error- Session invalid");
         }
@@ -39,6 +38,7 @@ const getUser = token => {
 }
 
 db.connect(DB_STRING);
+
 
 const apolloServer = new ApolloServer(
     { 
