@@ -5,7 +5,7 @@ Heading
 
 
 About: datatype, datastructure
--------------------------------
+------------------------------
 db <=> graphql <=> ui_things
 
 Au niveau de mongodb, favoritedBy et favorites sont des listes 

@@ -1,6 +1,7 @@
 const dev = require("./dev");
 const test = require("./test");
 const prod = require("./prod");
+const dump = require("../src/util/dump");
 
 // dynamically load env configuration 
 // this way is great than just .env file 
@@ -14,4 +15,8 @@ const envs = {
 }
 
 
-module.exports = { ...envs[env], env };
+// const tmp = envs[env];
+// dump(tmp)
+
+// module.exports = { ...envs[env], env }
+module.exports = envs[env];
