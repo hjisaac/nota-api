@@ -19,7 +19,10 @@ const port = env.port || 4000;
 const DB_STRING = env.db_string;
 
 const app = express();
-
+const corsOptions = {
+    origin: "*",
+    credentials: "true"
+};
 // middleware for preventing common web vulnerabilities
 app.use(helmet());
 // middleware for enabling Common-origin ressources sharing
