@@ -19,14 +19,14 @@ const port = env.port || 4000;
 const DB_STRING = env.db_string;
 
 const app = express();
-// const corsOptions = {
-//     origin: "*",
-//     credentials: "true"
-// };
+const corsOptions = {
+    origin: "*",
+    credentials: "true"
+};
 // middleware for preventing common web vulnerabilities
 app.use(helmet());
 // middleware for enabling Common-origin ressources sharing
-app.use(cors());
+app.use(cors(corsOptions));
 app.options("*", cors())
 
 // get user information from jsonwebtoken
