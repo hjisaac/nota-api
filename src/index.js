@@ -26,10 +26,10 @@ const corsOptions = {
 // middleware for preventing common web vulnerabilities
 app.use(helmet());
 // middleware for enabling Common-origin ressources sharing
-app.use(cors(corsOptions));
-app.options("*", cors());
-app.get("*", cors());
-app.post("*", cors());
+app.use(cors({ withCredentials: true }));
+// app.options("*", cors());
+// app.get("*", cors());
+// app.post("*", cors());
 
 // get user information from jsonwebtoken
 const getUser = token => {
