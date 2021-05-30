@@ -26,7 +26,7 @@ const corsOptions = {
 // middleware for preventing common web vulnerabilities
 app.use(helmet());
 // middleware for enabling Common-origin ressources sharing
-app.use(cors({ withCredentials: true }));
+app.use(cors({ withCredentials: true, origin: "http://localhost:1234" }));
 // app.options("*", cors());
 // app.get("*", cors());
 // app.post("*", cors());
