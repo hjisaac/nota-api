@@ -26,7 +26,7 @@ const corsOptions = {
 // middleware for preventing common web vulnerabilities
 app.use(helmet());
 // middleware for enabling Common-origin ressources sharing
-app.use(cors(corsOptions));
+app.use(cors());
 // app.options("*", cors());
 // app.get("*", cors());
 // app.post("*", cors());
@@ -60,7 +60,7 @@ const apolloServer = new ApolloServer(
         }
     }
 );
-apolloServer.applyMiddleware({ app, path:"/api", cors: { corsOptions } });
+apolloServer.applyMiddleware({ app, path:"/api", cors });
 
 app.listen(
     { port },
@@ -68,5 +68,3 @@ app.listen(
         console.log(`GraphQL is serving at http://localhost:${port}${apolloServer.graphqlPath}`);
     }
 );
-
-
