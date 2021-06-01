@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const helmet = require("helmet");
 const cors = require("cors");
 const depthLimit = require("graphql-depth-limit");
-const { ApolloServer, gql, registerServer } = require("apollo-server-express");
+const { ApolloServer, registerServer } = require("apollo-server-express");
 const { createComplexityLimitRule } = require("graphql-validation-complexity");
 
 const models = require("./models");
@@ -60,7 +60,7 @@ const apolloServer = new ApolloServer(
         }
     }
 );
-apolloServer.applyMiddleware({ app, path:"/api", cors: false });
+apolloServer.applyMiddleware({ app, path:"/api" });
 
 app.listen(
     { port },
