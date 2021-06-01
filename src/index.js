@@ -19,14 +19,14 @@ const port = env.port || 4000;
 const DB_STRING = env.db_string;
 
 const app = express();
-// const corsOptions = {
-//     origin: "http://localhost:1234",
-//     credentials: "true"
-// };
+const corsOptions = {
+    origin: "http://localhost:1234",
+    credentials: "true"
+};
 // middleware for preventing common web vulnerabilities
 app.use(helmet());
 // middleware for enabling Common-origin ressources sharing
-app.use(cors());
+// app.use(cors());
 // app.options("*", cors());
 // app.get("*", cors());
 // app.post("*", cors());
@@ -60,7 +60,7 @@ const apolloServer = new ApolloServer(
         }
     }
 );
-apolloServer.applyMiddleware({ app, path:"/api", cors });
+apolloServer.applyMiddleware({ app, path:"/api", cors: corsOptions });
 
 app.listen(
     { port },
