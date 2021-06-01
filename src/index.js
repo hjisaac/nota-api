@@ -60,7 +60,7 @@ const apolloServer = new ApolloServer(
         }
     }
 );
-apolloServer.applyMiddleware({ app, path:"/api", cors: { origin: "http://localhost:1234" } });
+apolloServer.applyMiddleware({ app, path:"/api", cors: false });
 
 app.listen(
     { port },
