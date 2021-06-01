@@ -27,7 +27,7 @@ const corsOptions = {
 app.use(helmet());
 // middleware for enabling Common-origin ressources sharing
 // app.use(cors());
-// app.options("*", cors());
+app.options("*", cors());
 // app.get("*", cors());
 // app.post("*", cors());
 
